@@ -21,7 +21,7 @@ or
 
 ```bash
 $ fbi add https://github.com/fbi-templates/fbi-project-fullpack.git
-$ cd path/to/empty-folder
+$ cd path/to/empty-folder
 $ fbi init fullpack
 ```
 
@@ -72,9 +72,9 @@ $ fbi <task> [params]
 
 ## More
 - [Official templates](https://github.com/fbi-templates)
-- [fbi full documentation](https://neikvon.gitbooks.io/fbi/content/)
+- [`fbi` documentation](https://neikvon.gitbooks.io/fbi/content/)
 
 ## Changelog
 
-- v2.0.0  (2017.12.09)
+- **v2.0.0**  (2017.12.09)
   - initialization

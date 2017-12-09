@@ -2,13 +2,12 @@ const targets = {
   browsers: ['last 2 versions', 'safari >= 7', 'ie > 8']
 }
 
-const banner = `
-Project name - [description]
+const banner = `<Project name>
+[descriptions]
 
-Author: [name]
+Authors: <authors>
 Built: ${new Date().toLocaleString()} via fbi
-
-Copyright @2017 [organization]`
+Copyright @${new Date().getFullYear()} <organization>`
 
 module.exports = {
   // Paths mapping
