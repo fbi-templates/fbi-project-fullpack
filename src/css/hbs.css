@@ -1,0 +1,6 @@
+@import '_base';
+@import '_font-awesome';
+
+.wrap {
+  padding: 1em;
+}
