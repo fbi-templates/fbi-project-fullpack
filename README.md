@@ -74,7 +74,12 @@ $ fbi <task> [params]
 - [Official templates](https://github.com/fbi-templates)
 - [`fbi` documentation](https://neikvon.gitbooks.io/fbi/content/)
 
+## License
+[MIT](https://opensource.org/licenses/MIT)
+
 ## Changelog
 
 - **v2.0.0**  (2017.12.09)
   - initialization
+
+
