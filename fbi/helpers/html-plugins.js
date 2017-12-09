@@ -8,7 +8,7 @@ module.exports = (opts, files, data) => {
     const hasJs = ctx.utils.fs.existSync(
       path.join(opts.mapping.src, opts.mapping.js, `${chunkname}.js`)
     )
-    const chunks = hasJs ? ['common', chunkname] : ['common']
+    const chunks = hasJs ? [opts.webpack.commons, chunkname] : []
 
     return {
       data,
@@ -21,7 +21,9 @@ module.exports = (opts, files, data) => {
         chunks.indexOf(a.names[0]) - chunks.indexOf(b.names[0]),
       excludeChunks: [],
       minify:
-        opts.htmlCompress && ctx.isProd ? opts.htmlCompress.options : false,
+        opts.htmlCompress.status === 'on' && ctx.isProd
+          ? opts.htmlCompress.options
+          : false,
       inline: opts.webpack.inline
     }
   })

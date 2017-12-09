@@ -79,6 +79,9 @@ $ fbi <task> [params]
 
 ## Changelog
 
+- **v2.0.3**  (2017.12.09)
+  - Compatible `webpack.commons` with old version
+
 - **v2.0.2**  (2017.12.09)
   - Update package info. Add `.editorconfig` previously.
 

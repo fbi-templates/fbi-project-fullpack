@@ -41,7 +41,7 @@ module.exports = {
   data: {
     all: {
       CDN: './',
-      VERSION: 'v2.0.0',
+      VERSION: 'v2.0.2',
       COPYRIGHT: '@2017'
     },
     dev: {
@@ -63,13 +63,13 @@ module.exports = {
     // Hot module replacement
     hot: true,
     // Hash versioning
-    hash: false,
+    hash: true,
     // Inline css & js
     inline: false,
     // Common js
-    commons: 'common',
+    commons: 'vendor',
     // Compress the code
-    compress: true,
+    compress: false,
     esnext: false,
     // Byte limit to inline files as Data URL
     limit: 10000,
@@ -85,7 +85,7 @@ module.exports = {
 
   // Html compress
   htmlCompress: {
-    status: 'on',
+    status: 'on', // 'on': yes; '': no
     options: {
       minifyJS: true,
       minifyCSS: true,
@@ -129,9 +129,9 @@ module.exports = {
         allowImportExportEverywhere: false
       },
       rules: {
-        semi: [2, 'never'], // 行尾不要使用分号
-        'comma-dangle': [2, 'never'], // 对象最后一项 不使用逗号
-        'no-console': [0], // 可以使用console
+        semi: [2, 'never'],
+        'comma-dangle': [2, 'never'],
+        'no-console': [0],
         'no-param-reassign': [0] // https://github.com/airbnb/javascript#functions--mutate-params
       }
     }

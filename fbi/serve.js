@@ -4,12 +4,11 @@ const koaStatic = require('koa-static')
 const webpack = require('webpack')
 const koaWebpack = require('koa-webpack')
 const statsConfig = require('./config/stats.config')
-
 ctx.env = require('./helpers/get-env')('serve')
-const webpackConfig = require('./config/webpack.config')
-// console.log(ctx.env)
 
 function server(app) {
+  const webpackConfig = require('./config/webpack.config')
+
   return new Promise((resolve, reject) => {
     const compiler = webpack(webpackConfig)
     const middleware = koaWebpack({

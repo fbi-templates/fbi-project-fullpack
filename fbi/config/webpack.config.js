@@ -49,6 +49,10 @@ const entryNames = []
 const devModulesPath = ctx.nodeModulesPaths[1] || './node_modules'
 const polyfillEntry = devModulesPath + '/babel-polyfill'
 const hotEntry = devModulesPath + '/webpack-hot-middleware/client?reload=true'
+webpackOpts.commons = webpackOpts.commons
+  ? typeof webpackOpts.commons === 'boolean' ? 'common' : webpackOpts.commons
+  : ''
+let generateCommonsOnDevMode = false
 
 function entries() {
   const entries = {}
@@ -62,7 +66,7 @@ function entries() {
     ctx.options.mapping.jsCommon,
     '*.js'
   )
-  const files = glob.sync(`src/js/*.js`)
+
   glob.sync(filesPath).map(item => {
     const name = path.basename(item, '.js')
     entryNames.push(name)
@@ -75,9 +79,13 @@ function entries() {
     }
     entries[name] = entries[name].concat(['./' + item])
   })
+
   const commons = glob.sync(commonFilesPath)
   if (commons.length) {
+    generateCommonsOnDevMode = true
     entries[webpackOpts.commons] = commons.map(item => './' + item)
+  }
+  if (commons.length || webpackOpts.commons) {
     entryNames.push(webpackOpts.commons)
   }
   return entries
@@ -258,7 +266,7 @@ const config = {
           allChunks: false
         })
       : noop,
-    webpackOpts.commons
+    (prod || generateCommonsOnDevMode) && webpackOpts.commons
       ? new webpack.optimize.CommonsChunkPlugin({
           name: webpackOpts.commons,
           filename: hash
