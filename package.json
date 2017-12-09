@@ -2,9 +2,6 @@
   "name": "fullpack",
   "version": "2.0.1",
   "description": "Normal front-end project template.",
-  "author": "fbi",
-  "license": "MIT",
-  "repository": {},
   "engines": {
     "node": ">=6.9.1",
     "npm": ">= 3.10.0"
@@ -53,6 +50,25 @@
     "webpack": "3.10.0"
   },
   "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fbi-templates/fbi-project-fullpack.git"
+  },
+  "keywords": [
+    "front-end",
+    "development",
+    "frameworkless",
+    "handlebars",
+    "tasks",
+    "fbi-project",
+    "fbi"
+  ],
+  "author": "neikvon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fbi-templates/fbi-project-fullpack/issues"
+  },
+  "homepage": "https://github.com/fbi-templates/fbi-project-fullpack#readme",
   "fbi": {
     "template": "fbi-project-fullpack",
     "tasks": {

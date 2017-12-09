@@ -79,6 +79,9 @@ $ fbi <task> [params]
 
 ## Changelog
 
+- **v2.0.2**  (2017.12.09)
+  - Update package info. Add `.editorconfig` previously.
+
 - **v2.0.0**  (2017.12.09)
   - initialization
 
