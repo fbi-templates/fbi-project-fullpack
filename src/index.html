@@ -1,62 +1,68 @@
-{{> start title="Home - FBI Fullpack Template Demo" }}
+{{> start title="Home - fbi Fullpack Template Demo" }}
 {{> nav tab='home'}}
 
-<section class="center">
+<section class="wrap">
   <h2 class="title">
     fullpack
     <sub class="version">{{ htmlWebpackPlugin.options.data.VERSION }}</sub>
   </h2>
-  <h3 class="txt-center">Progressive frontend project template.</h3>
-  <div class="desc">
-    Building ecosystem:
-    <ul class="site-list">
-      <li>
-        <a target="_blank" href="https://github.com/webpack/webpack">
-          <span class="ico webpack">
-            <img src="./img/webpack.png">
-          </span>
-          Webpack
-        </a>
-      </li>
-      <li>
-        <a target="_blank" href="https://babeljs.io/">
-          <span class="ico babel"></span>
-          Babel
-        </a>
-      </li>
-      <li>
-        <a target="_blank" href="http://postcss.org/">
-          <span class="ico postcss"></span>
-          PostCss
-        </a>(
-        <a target="_blank" href="https://github.com/jonathantneal/precss">Precss</a>,
-        <a target="_blank" href="https://github.com/postcss/autoprefixer">Autoprefixer</a>)</li>
-      <li>
-        <a target="_blank" href="http://handlebarsjs.com/">
-          <span class="ico handlebars"></span>
-          Handlebars
-        </a>
-      </li>
-      <li>
-        <a target="_blank" href="http://eslint.org/">
-          <span class="ico eslint"></span>
-          ESlint
-        </a>
-      </li>
-      <li>
-        <a target="_blank" href="http://stylelint.io/">
-          <span class="ico"></span>
-          Stylelint
-        </a>
-      </li>
-    </ul>
-  </div>
 
-  <div class="copyright">
-    <a href="https://github.com/AlloyTeam/fbi" target="_blank">fbi</a>
-    {{ htmlWebpackPlugin.options.data.COPYRIGHT }}
+  <p class="desc">Progressive frontend project template.</p>
+
+  <h3 class="block-title">Building ecosystem:</h3>
+  <ul class="site-list">
+    <li>
+      <a target="_blank" href="https://github.com/webpack/webpack">
+        <span class="ico webpack">
+          <img src="./images/webpack.png">
+        </span>
+        Webpack
+      </a>
+    </li>
+    <li>
+      <a target="_blank" href="https://babeljs.io/">
+        <span class="ico babel"></span>
+        Babel
+      </a>
+    </li>
+    <li>
+      <a target="_blank" href="http://postcss.org/">
+        <span class="ico postcss"></span>
+        PostCss
+      </a>
+      :
+      <a target="_blank" href="https://github.com/jonathantneal/precss">Precss</a>,
+      <a target="_blank" href="https://github.com/postcss/autoprefixer">Autoprefixer</a></li>
+    <li>
+      <a target="_blank" href="http://handlebarsjs.com/">
+        <span class="ico handlebars"></span>
+        Handlebars
+      </a>
+    </li>
+    <li>
+      <a target="_blank" href="http://eslint.org/">
+        <span class="ico eslint"></span>
+        ESlint
+      </a>
+    </li>
+    <li>
+      <a target="_blank" href="http://stylelint.io/">
+        <span class="ico"></span>
+        Stylelint
+      </a>
+    </li>
+  </ul>
+
+  <h3 class="block-title">More Tasks & Project templates:</h3>
+  <div class="templates-list">
+    <ul id="taskList">loading...</ul>
+    <ul id="tmplList"></ul>
   </div>
 
 </section>
+
+<div class="copyright txt-center">
+  <a href="https://github.com/AlloyTeam/fbi" target="_blank">fbi</a> {{ htmlWebpackPlugin.options.data.COPYRIGHT }}
+</div>
 
 {{> end scripts="lib/a.js,lib/b.js"}}

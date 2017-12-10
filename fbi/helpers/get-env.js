@@ -63,7 +63,7 @@ module.exports = (task, def, quiet) => {
   })
 
   if (!quiet) {
-    ctx.logger.log('Environment:', ctx.utils.style.yellow(envName))
+    ctx.logger.log('Environment:', ctx.utils.style.green(envName))
   }
 
   return {

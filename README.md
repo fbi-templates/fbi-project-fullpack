@@ -1,13 +1,27 @@
 # fbi-project-fullpack
-Normal front-end project template
+Progressive frontend project template.
 
 > This is a fbi project template. If you haven't installed [fbi](https://github.com/AlloyTeam/fbi) yet, use the following command to install.
 >
 > `$ npm i -g fbi` or `yarn global add fbi`
 
+[中文 README](./README_zh.md)
+
 ## Requirements
 - `fbi v3.0+`
 - `node v7.6+`
+
+## Features
+- Support pure `HTML` and [Handlebars](http://handlebarsjs.com/) template.
+- Support pure `CSS` and [Sass-like](https://github.com/jonathantneal/precss) [PostCSS](http://postcss.org/)
+- Support `ES5`, `ES2015`, `ES2016`, `ES2017`. Adds specific imports for polyfills automatically when they are used in each file. (polyfills will increase the file size, please use as appropriate.) [see more](https://github.com/babel/babel/tree/master/packages/babel-preset-env#usebuiltins-usage)
+- Unlimited environment data.
+- Http proxy.
+- Paths mapping.
+- Javascript linting and CSS linting.
+- Minify.
+- Highly configurable. 
+
 
 ## Usage
 
@@ -70,6 +84,33 @@ $ fbi <task> [params]
   - `fbi c`
   - `fbi clean`
 
+
+## Advanced
+**How to change the build configuration?**
+1. Initialize the options file to the project directory. 
+```bash
+$ cd path/to/project
+$ fbi init -o # or `--options`
+```
+2. The options file will be located at `fbi/options.js`, includes instructions. 
+
+**How to change the build logic?**
+1. Initialize options file and tasks to the project directory. 
+```bash
+$ cd path/to/project
+$ fbi init -t # or `--tasks`
+```
+2. Files will be located at `fbi` folder. Do what you want to do.
+
+**Where is the build dependencies?**
+
+Build dependencies are by default in fbi's store. You can use the following command to download to the project.
+
+```bash
+$ fbi init -a  # or `--all`
+```
+> Note: If local tasks or options exist, the original files will be backed up in `fbi-bak` folder.
+
 ## More
 - [Official templates](https://github.com/fbi-templates)
 - [`fbi` documentation](https://neikvon.gitbooks.io/fbi/content/)
@@ -78,6 +119,9 @@ $ fbi <task> [params]
 [MIT](https://opensource.org/licenses/MIT)
 
 ## Changelog
+
+- **v2.1.0**  (2017.12.10)
+  - Refactor: building logic, project structure.
 
 - **v2.0.3**  (2017.12.09)
   - Compatible `webpack.commons` with old version

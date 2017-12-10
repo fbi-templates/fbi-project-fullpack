@@ -6,7 +6,7 @@ module.exports = (opts, files, data) => {
     const filename = path.basename(item)
     const chunkname = filename.replace(/.(html|hbs|handlebars)/, '')
     const hasJs = ctx.utils.fs.existSync(
-      path.join(opts.mapping.src, opts.mapping.js, `${chunkname}.js`)
+      path.join(opts.mapping.src, opts.mapping.scripts.src, `${chunkname}.js`)
     )
     const chunks = hasJs ? [opts.webpack.commons, chunkname] : []
 
@@ -15,16 +15,17 @@ module.exports = (opts, files, data) => {
       filename: chunkname + '.html',
       template: item,
       cache: false,
-      inject: !opts.webpack.inline,
+      inject: !opts.webpack.inlineAssets,
       chunks: chunks,
       chunksSortMode: (a, b) =>
         chunks.indexOf(a.names[0]) - chunks.indexOf(b.names[0]),
       excludeChunks: [],
+      // https://github.com/kangax/html-minifier#options-quick-reference
       minify:
-        opts.htmlCompress.status === 'on' && ctx.isProd
-          ? opts.htmlCompress.options
+        ctx.isProd && opts.minify.templates.enable
+          ? opts.minify.templates.options
           : false,
-      inline: opts.webpack.inline
+      inline: opts.webpack.inlineAssets
     }
   })
 }

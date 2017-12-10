@@ -2,28 +2,56 @@ const http = require('http')
 const Koa = require('koa')
 const koaStatic = require('koa-static')
 const webpack = require('webpack')
-const koaWebpack = require('koa-webpack')
+const proxy = require('koa-proxies')
+const koaWebpack = require('./plugins/koa-webpack')
 const statsConfig = require('./config/stats.config')
-ctx.env = require('./helpers/get-env')('serve')
 
-function server(app) {
-  const webpackConfig = require('./config/webpack.config')
+// Set env
+ctx.env = require('./helpers/get-env')('serve')
+ctx.noop = function() {}
+
+const makeWebpackConfig = require('./config/webpack')
+const opts = ctx.options
+
+async function server(app) {
+  const webpackConfigs = await makeWebpackConfig(opts, 'dev')
 
   return new Promise((resolve, reject) => {
-    const compiler = webpack(webpackConfig)
+    const compiler = webpack(webpackConfigs)
     const middleware = koaWebpack({
       compiler,
       dev: {
-        publicPath: webpackConfig.output.publicPath,
+        publicPath: webpackConfigs.output.publicPath,
         headers: {
           'Access-Control-Allow-Origin': '*'
+        },
+        watchOptions: {
+          aggregateTimeout: 300,
+          poll: true
         },
         stats: statsConfig
       }
     })
 
     app.use(middleware)
-    app.use(koaStatic(ctx.options.mapping.src || 'src'))
+    app.use(koaStatic(opts.mapping.src || 'src'))
+
+    const proxyTableKeys = Object.keys(opts.proxy)
+    if (proxyTableKeys.length) {
+      // https://github.com/vagusX/koa-proxies/blob/master/examples/server.js#L11
+      proxyTableKeys.map(context => {
+        let options = opts.proxy[context]
+        if (typeof options === 'string') {
+          options = {
+            target: options,
+            changeOrigin: true,
+            logs: Boolean(ctx.mode.debug),
+            rewrite: _path => _path.replace(context, '/')
+          }
+        }
+        app.use(proxy(context, options))
+      })
+    }
 
     middleware.dev.waitUntilValid(() => resolve(app))
   })
@@ -63,9 +91,9 @@ async function start() {
     await server(app)
   }
 
-  let startPort = ctx.env.params.port >> 0 || ctx.options.server.port
+  let startPort = ctx.env.params.port >> 0 || opts.server.port
   const port = await listen(app, startPort)
-  ctx.logger.info(`Server runing at http://${ctx.options.server.host}:${port}`)
+  ctx.logger.info(`Server runing at http://${opts.server.host}:${port}`)
 }
 
 module.exports = start

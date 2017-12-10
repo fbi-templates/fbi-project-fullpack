@@ -4,26 +4,35 @@ const rimraf = require('rimraf')
 const remove = require('./helpers/remove')
 
 ctx.env = require('./helpers/get-env')('build', 'prod')
+ctx.noop = function() {}
+
+const webpackConfig = require('./config/webpack')
+
+const opts = ctx.options
 ctx.isProd = true
 
-const webpackConfig = require('./config/webpack.config')
 const statsConfig = require('./config/stats.config')
 
 async function build() {
   const dist = ctx.env.dist || 'dist'
   const target = ctx.utils.path.cwd(dist)
+
   if (await ctx.utils.fs.exist(target)) {
     await remove(target)
-    ctx.logger.success(`Destination \`${dist}\` removed.`)
+    ctx.logger.log(`Destination \`${dist}\` removed.`)
+  } else {
+    ctx.logger.log(`Destination: \`${dist}\``)
   }
 
+  const webpackConfigs = await webpackConfig(opts, 'prod')
+
   return new Promise((resolve, reject) => {
-    webpack(webpackConfig, (err, stats) => {
+    webpack(webpackConfigs, (err, stats) => {
       if (err) {
         reject(err)
       }
       console.log(stats.toString(statsConfig))
-      ctx.logger.log(`Destination: \`${dist}\``)
+
       resolve()
     })
   })

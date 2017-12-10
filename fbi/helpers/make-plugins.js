@@ -10,9 +10,9 @@
  *  require(pluginA)(optsA),
  *  require(pluginB)(optsB)
  * ]
- * 
- * @param {Object} configs 
- * @returns 
+ *
+ * @param {Object} configs
+ * @returns
  */
 module.exports = configs => {
   const keys = Object.keys(configs)
