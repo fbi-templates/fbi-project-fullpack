@@ -49,7 +49,7 @@ module.exports = {
   // exclude: "filter" | /filter/ | (moduleSource) => ... return true|false |
   //   ["filter"] | [/filter/] | [(moduleSource) => ... return true|false],
   // Add the hash of the compilation
-  hash: true,
+  hash: false,
   // Set the maximum number of modules to be shown
   maxModules: 15,
   // Add built modules information
@@ -70,7 +70,7 @@ module.exports = {
   // Add the source code of modules
   source: false,
   // Add timing information
-  timings: true,
+  timings: false,
   // Show which exports of a module are used
   usedExports: false,
   // Add webpack version information

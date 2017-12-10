@@ -4,7 +4,7 @@ const koaStatic = require('koa-static')
 const webpack = require('webpack')
 const proxy = require('koa-proxies')
 const koaWebpack = require('./plugins/koa-webpack')
-const statsConfig = require('./config/stats.config')
+const statsConfig = require('./config/stats')
 
 // Set env
 ctx.env = require('./helpers/get-env')('serve')

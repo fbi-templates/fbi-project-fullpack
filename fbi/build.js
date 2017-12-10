@@ -5,13 +5,11 @@ const remove = require('./helpers/remove')
 
 ctx.env = require('./helpers/get-env')('build', 'prod')
 ctx.noop = function() {}
+ctx.isProd = true
+const opts = ctx.options
 
 const webpackConfig = require('./config/webpack')
-
-const opts = ctx.options
-ctx.isProd = true
-
-const statsConfig = require('./config/stats.config')
+const statsConfig = require('./config/stats')
 
 async function build() {
   const dist = ctx.env.dist || 'dist'

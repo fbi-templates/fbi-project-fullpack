@@ -17,7 +17,7 @@ function getEnvs(data) {
   })
 }
 
-function getEnvData(envName, dataObj) {
+function getEnvsData(envName, dataObj) {
   const data = Object.assign({}, dataObj.all || {}, dataObj[envName])
 
   if (data && typeof data === 'object' && Object.keys(data).length > 0) {
@@ -68,8 +68,8 @@ module.exports = (task, def, quiet) => {
 
   return {
     name: envName,
+    data: getEnvsData(envName, ctx.options.data),
     dist: getDistRoot(envName, ctx.options.mapping),
-    data: getEnvData(envName, ctx.options.data),
     params
   }
 }

@@ -16,11 +16,8 @@
  */
 module.exports = configs => {
   const keys = Object.keys(configs)
-  if (!keys || keys.length < 1) {
-    return []
-  }
 
-  return keys.map(item => {
-    return require(item)(configs[item])
-  })
+  return !keys || keys.length < 1
+    ? []
+    : keys.map(item => require(item)(configs[item]))
 }
