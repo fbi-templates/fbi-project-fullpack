@@ -16,7 +16,7 @@
 ## 主要特性
 - 支持纯 `HTML` 和 [Handlebars](http://handlebarsjs.com/) 模板
 - 支持纯 `CSS` and [Sass-like](https://github.com/jonathantneal/precss) [PostCSS](http://postcss.org/)
-- 支持 `ES5`, `ES2015`, `ES2016`, `ES2017`， 使用到的新特性会自动引入相关polyfills (使用到的新特性会自动引入相关polyfills会增加文件体积，请酌情使用) [了解更多](https://github.com/babel/babel/tree/master/packages/babel-preset-env#usebuiltins-usage)
+- 支持 `ES5`, `ES2015`, `ES2016`, `ES2017`， 使用到的新特性会自动引入相关polyfills (polyfills会增加文件体积，请酌情使用) [了解更多](https://github.com/babel/babel/tree/master/packages/babel-preset-env#usebuiltins-usage)
 - 无限制的环境数据配置
 - Http代理
 - 路径映射
@@ -112,6 +112,23 @@ $ fbi init -t # or `--tasks`
 $ fbi init -a  # or `--all`
 ```
 > 注: 如果本地任务或选项文件已存在，原文件将会备份在`fbi-bak`目录。(不会覆盖)
+
+## 选项
+[`fbi/options.js`](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js)
+
+| 属性	| 描述 | 链接 |
+| --------  | ----------- | ----------- |
+| data	| 环境数据配置 | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L11) |
+| proxy	| Http 代理 | [koa-proxies](https://github.com/vagusX/koa-proxies/blob/master/examples/server.js#L11)  [node-http-proxy](https://github.com/nodejitsu/node-http-proxy#options) |
+| mapping	| 路径映射 | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L43) |
+| server	| 开发服务器配置 | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L90) |
+| webpack	| Webpack 简单配置 | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L98) |
+| lint	| 代码静态检查选项 | [eslint-config-airbnb-base](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base)  [stylelint-config-standard](https://github.com/stylelint/stylelint-config-standard) |
+| minify	| 压缩选项 | [html-minifier](https://github.com/kangax/html-minifier#options-quick-reference)  [uglifyjs-webpack-plugin](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/#options)  [cssnano](http://cssnano.co/guides/presets/#how-do-presets-work) |
+| copy	| 目录拷贝选项 | [copy-webpack-plugin](https://github.com/webpack-contrib/copy-webpack-plugin#usage) |
+| templates	| 模板引擎名称 | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L192) |
+| scripts	| babel-loader 选项 | [babel-loader](https://github.com/babel/babel-loader#options) |
+| styles	| PostCSS 选项 | [postcss-loader](https://github.com/postcss/postcss-loader#options) |
 
 ## 更多信息
 - [官方模板库](https://github.com/fbi-templates)

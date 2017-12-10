@@ -111,6 +111,24 @@ $ fbi init -a  # or `--all`
 ```
 > Note: If local tasks or options exist, the original files will be backed up in `fbi-bak` folder.
 
+## Options
+[`fbi/options.js`](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js)
+
+| Property	| Description | Links |
+| --------  | ----------- | ----------- |
+| data	| Environment data | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L11) |
+| proxy	| Http proxy | [koa-proxies](https://github.com/vagusX/koa-proxies/blob/master/examples/server.js#L11)  [node-http-proxy](https://github.com/nodejitsu/node-http-proxy#options) |
+| mapping	| Paths mapping | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L43) |
+| server	| Development Server config | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L90) |
+| webpack	| Webpack simple config | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L98) |
+| lint	| Code linting options | [eslint-config-airbnb-base](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base)  [stylelint-config-standard](https://github.com/stylelint/stylelint-config-standard) |
+| minify	| Minify options | [html-minifier](https://github.com/kangax/html-minifier#options-quick-reference)  [uglifyjs-webpack-plugin](https://github.com/webpack-contrib/uglifyjs-webpack-plugin/#options)  [cssnano](http://cssnano.co/guides/presets/#how-do-presets-work) |
+| copy	| Copy options | [copy-webpack-plugin](https://github.com/webpack-contrib/copy-webpack-plugin#usage) |
+| templates	| Template engine name | [source](https://github.com/fbi-templates/fbi-project-fullpack/blob/master/fbi/options.js#L192) |
+| scripts	| babel-loader options | [babel-loader](https://github.com/babel/babel-loader#options) |
+| styles	| PostCSS options | [postcss-loader](https://github.com/postcss/postcss-loader#options) |
+
+
 ## More
 - [Official templates](https://github.com/fbi-templates)
 - [`fbi` documentation](https://neikvon.gitbooks.io/fbi/content/)
