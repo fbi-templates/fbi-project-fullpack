@@ -51,9 +51,6 @@ module.exports = async (opts, env) => {
     })
   }
 
-  if (opts.lint.styles.enable) {
-  }
-
   // Common chunk
   if (
     (ctx.isProd || confOptions.generateCommonsOnDevMode) &&

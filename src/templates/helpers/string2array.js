@@ -5,6 +5,4 @@
  * @param {string} str
  * @returns
  */
-module.exports = function(str) {
-  return str.split(',')
-}
+module.exports = str => str.split(',').filter(i => i.trim())

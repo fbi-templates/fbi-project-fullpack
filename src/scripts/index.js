@@ -13,7 +13,7 @@ function ajax({url, method = 'GET'} = {}) {
         resolve(xhr.responseText)
       }
     }
-    xhr.open('GET', url, true)
+    xhr.open(method, url, true)
     xhr.send(null)
   })
 }

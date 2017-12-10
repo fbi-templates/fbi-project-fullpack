@@ -20,6 +20,11 @@
   <!-- DNS prefetch domain -->
   <link rel="dns-prefetch" href="">
   <title>{{ title }}</title>
+  {{#if styles}}
+    {{#each (string2array styles)}}
+    <link rel="stylesheet" href="{{this}}">
+    {{/each}}
+  {{/if}}
 </head>
 
 <body>

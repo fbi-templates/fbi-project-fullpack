@@ -65,7 +65,7 @@ const config = {
         : 10, // >= 1
       minChunkSize: opts.webpack.minChunkSize
         ? opts.webpack.minChunkSize >> 0
-        : 1000
+        : 10000
     })
   ],
   performance: {

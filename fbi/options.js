@@ -12,7 +12,7 @@ const options = {
     // all environment
     all: {
       CDN: './',
-      VERSION: 'v2.0.2',
+      VERSION: 'v2.1.2',
       COPYRIGHT: '@2017'
     },
     // `fbi s`
@@ -107,10 +107,10 @@ const options = {
     // Commons chunk
     commons: 'vendor',
     // Byte limit to inline files as Data URL
-    assetsSizeLimit: 10000,
+    assetsSizeLimit: 10000, // default: 10000
     // For LimitChunkCountPlugin: https://doc.webpack-china.org/plugins/limit-chunk-count-plugin
-    maxChunks: 3, // >= 1
-    minChunkSize: 10000,
+    maxChunks: 3, // >= 1, default: 10
+    minChunkSize: 10000, // default: 10000
     externals: [],
     alias: {},
     // Webpack module noParse

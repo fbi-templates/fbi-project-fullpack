@@ -5,6 +5,4 @@
  * @param {object} obj
  * @returns
  */
-module.exports = function(obj) {
-  return JSON.stringify(obj, null, 2)
-}
+module.exports = obj => JSON.stringify(obj, null, 2)
