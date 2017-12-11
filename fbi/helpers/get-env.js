@@ -8,11 +8,10 @@ function getEnvs(data) {
         name: k,
         alias: a
       }
-    } else {
-      return {
-        name: k,
-        alias: ''
-      }
+    }
+    return {
+      name: k,
+      alias: ''
     }
   })
 }
@@ -31,13 +30,7 @@ function getEnvsData(envName, dataObj) {
 }
 
 function getDistRoot(envName, opts) {
-  let root = ''
-  if (envName === 'prod') {
-    root = opts.dist
-  } else {
-    root = opts.dist + '-' + envName
-  }
-  return root
+  return envName === 'prod' ? opts.dist : opts.dist + '-' + envName
 }
 
 module.exports = (task, def, quiet) => {
