@@ -12,7 +12,6 @@ const babelOptions = require('../helpers/babel-options')(
   opts.scripts,
   devModulesPath
 )
-console.log('path.join(opts.mapping.root, opts.mapping.src):',path.join(process.cwd(), opts.mapping.root, opts.mapping.src))
 
 const config = {
   target: opts.webpack.target || 'web',
