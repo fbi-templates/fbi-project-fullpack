@@ -138,6 +138,9 @@ $ fbi init -a  # or `--all`
 
 ## Changelog
 
+- **v2.1.5**  (2018.01.26)
+  - BugFixes: ES6 compilation failed(babel-loader options include)
+
 - **v2.1.0**  (2017.12.10)
   - Refactor: building logic, project structure.
 

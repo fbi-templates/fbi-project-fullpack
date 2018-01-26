@@ -139,6 +139,9 @@ $ fbi init -a  # or `--all`
 
 ## 变更日志
 
+- **v2.1.5**  (2018.01.26)
+  - BugFixes: ES6编译失败(babel-loader include选项错误)
+
 - **v2.1.0**  (2017.12.10)
   - Refactor: building logic, project structure.
 
