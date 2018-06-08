@@ -1,6 +1,6 @@
 {
   "name": "fullpack",
-  "version": "2.1.6",
+  "version": "3.0.0",
   "description": "Normal front-end project template.",
   "engines": {
     "node": ">=6.9.1",
