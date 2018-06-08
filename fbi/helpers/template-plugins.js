@@ -1,14 +1,16 @@
 const path = require('path')
-const glob = require('glob')
+const globby = require('globby')
 
 module.exports = (opts, files, data) => {
   return files.map(item => {
     const filename = path.basename(item)
     const chunkname = filename.replace(/.(html|hbs|handlebars)/, '')
-    const hasJs = ctx.utils.fs.existSync(
-      path.join(opts.mapping.src, opts.mapping.scripts.src, `${chunkname}.js`)
-    )
-    const chunks = hasJs ? [opts.webpack.commons, chunkname] : []
+    const hasJs =
+    // ctx.utils.fs.existSync(
+    //   path.join(opts.mapping.src, opts.mapping.scripts.src, `${chunkname}.js`)
+    // )
+    globby.sync(path.join(opts.mapping.src, opts.mapping.scripts.src, `${chunkname}.{js,ts,tsx}`))
+    const chunks = hasJs.length > 0 ? [opts.webpack.commons, chunkname] : []
 
     return {
       data,

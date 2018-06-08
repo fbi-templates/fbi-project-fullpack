@@ -139,6 +139,11 @@ $ fbi init -a  # or `--all`
 
 ## 变更日志
 
+- **v3**  (2018.06.08)
+  - 更新开发依赖.
+  - 现在使用 `webpack 4`.
+  - 支持 'web worker', WebAssembly, Typescript.
+
 - **v2.1.5**  (2018.01.26)
   - BugFixes: ES6编译失败(babel-loader include选项错误)
 

@@ -138,6 +138,11 @@ $ fbi init -a  # or `--all`
 
 ## Changelog
 
+- **v3**  (2018.06.08)
+  - Update dependencies.
+  - Using `webpack 4` now.
+  - Added support for 'web worker', WebAssembly, Typescript.
+
 - **v2.1.5**  (2018.01.26)
   - BugFixes: ES6 compilation failed(babel-loader options include)
 

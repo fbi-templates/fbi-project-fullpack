@@ -32,9 +32,7 @@ module.exports = async (opts, env) => {
       loader: 'eslint-loader',
       enforce: 'pre',
       exclude: /node_modules/,
-      options: Object.assign(
-        {},
-        {
+      options: Object.assign({}, {
           root: true,
           parser: 'babel-eslint',
           formatter: require('eslint-friendly-formatter'),
@@ -56,39 +54,33 @@ module.exports = async (opts, env) => {
     (ctx.isProd || confOptions.generateCommonsOnDevMode) &&
     opts.webpack.commons
   ) {
-    config.plugins.push(
-      new webpack.optimize.CommonsChunkPlugin({
-        name: opts.webpack.commons,
-        filename: opts.webpack.hash
-          ? ctx.isProd
-            ? `${opts.mapping.scripts.dist}/[name]-${opts.webpack.format
-                .hash}.js`
-            : `${opts.mapping.scripts.dist}/[name].js?${opts.webpack.format
-                .hash}`
-          : `${opts.mapping.scripts.dist}/[name].js`,
-        chunks: confOptions.entryNames,
-        minChunks: Infinity
-      })
-    )
+
+    config.optimization.splitChunks = {
+      cacheGroups: {
+        commons: {
+          name: opts.webpack.commons,
+          chunks: 'initial',
+          minChunks: 2
+        }
+      }
+    }
   }
 
   // Template
   if (confOptions.useTemplateEngine) {
     config.module.rules.push({
       test: /\.(html|hbs|handlebars)$/i,
-      use: [
-        {
-          loader: 'handlebars-loader',
-          options: {
-            extensions: ['.hbs', '.html', '.handlebars'],
-            inlineRequires: `\/${opts.mapping.images.src}|${opts.mapping.media
+      use: [{
+        loader: 'handlebars-loader',
+        options: {
+          extensions: ['.hbs', '.html', '.handlebars'],
+          inlineRequires: `\/${opts.mapping.images.src}|${opts.mapping.media
               .src}\/`,
-            partialDirs: confOptions.handlebarsDirs.partialDirs,
-            helperDirs: confOptions.handlebarsDirs.helperDirs,
-            debug: Boolean(ctx.mode.debug)
-          }
+          partialDirs: confOptions.handlebarsDirs.partialDirs,
+          helperDirs: confOptions.handlebarsDirs.helperDirs,
+          debug: Boolean(ctx.mode.debug)
         }
-      ]
+      }]
     })
   } else {
     config.module.rules.push({

@@ -1,19 +1,22 @@
 import '../styles/index.css'
+import demoJson from './test/demo.json'
 
-console.log('from `index.js`')
+console.log('from `index.js`', demoJson)
 
-function ajax({url, method = 'GET'} = {}) {
+function ajax({
+  url,
+  method = 'GET',
+  timeout = 2000
+} = {}) {
   if (!url) {
     throw new Error('plz give me a url')
   }
   const xhr = new XMLHttpRequest()
   return new Promise((resolve, reject) => {
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        resolve(xhr.responseText)
-      }
-    }
     xhr.open(method, url, true)
+    xhr.timeout = timeout
+    xhr.onload = () => resolve(xhr.responseText)
+    xhr.ontimeout = () => reject(url + ' timeout')
     xhr.send(null)
   })
 }
@@ -50,4 +53,7 @@ ajax({
 
   $taskList.innerHTML = taskHtml
   $tmplList.innerHTML = tmplHtml
+}).catch(err => {
+  console.error(err)
+  document.querySelector('#taskList').innerHTML = 'request timeout'
 })

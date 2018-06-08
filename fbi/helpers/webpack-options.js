@@ -18,12 +18,12 @@ async function getEntries(
   const filesPath = path.join(
     opts.mapping.src,
     opts.mapping.scripts.src,
-    '*.js'
+    '*.{js,ts,tsx}'
   )
   const commonFilesPath = path.join(
     opts.mapping.src,
     opts.mapping.scripts.vendors,
-    '*.js'
+    '*.{js,ts,tsx}'
   )
   useTemplateEngine = ['handlebars', 'hbs'].includes(opts.templates.template)
   const templateFilesPath = path.join(
@@ -50,7 +50,8 @@ async function getEntries(
   }
 
   normalFiles.map(item => {
-    const name = path.basename(item, '.js')
+    const ext = path.extname(item)
+    const name = path.basename(item, ext)
     entryNames.push(name)
     entries[name] = []
     if (!isProd && opts.webpack.hot) {

@@ -13,13 +13,15 @@ const babelOptions = require('../helpers/babel-options')(
   devModulesPath
 )
 
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+
 const config = {
   target: opts.webpack.target || 'web',
   cache: opts.webpack.cache,
   externals: opts.webpack.externals,
   resolve: {
     modules: ctx.nodeModulesPaths,
-    extensions: ['*', '.js', '.css', '.json'],
+    extensions: ['*', '.ts', '.tsx', '.js', '.css', '.json'],
     unsafeCache: true,
     alias: opts.webpack.alias
   },
@@ -27,18 +29,25 @@ const config = {
     modules: ctx.nodeModulesPaths
   },
   module: {
-    noParse: ctx.options.noParse
-      ? ctx.options.noParse
-      : () => {
-          return false
-        },
-    rules: [
-      {
+    noParse: opts.noParse ?
+      opts.noParse :
+      () => {
+        return false
+      },
+    rules: [{
+        test: /\.worker\.js$/,
+        use: {
+          loader: 'worker-loader',
+          options: {
+            name: opts.webpack.hash ?
+              `${opts.mapping.scripts.workersDist}[name]-${opts.webpack.format.hash ||
+                '[hash:6]'}.js` : `${opts.mapping.scripts.workersDist}[name].js`,
+          }
+        }
+      }, {
         test: /\.js$/,
-        // include: [path.join(opts.mapping.root, opts.mapping.src)],
         exclude: _path => !!_path.match(/node_modules/),
-        use: [
-          {
+        use: [{
             loader: 'cache-loader',
             options: {
               cacheDirectory: path.resolve('node_modules/.cache/cache-loader')
@@ -51,22 +60,33 @@ const config = {
         ]
       },
       {
-        test: /\.json$/,
-        use: 'json-loader'
+        test: /\.wasm$/,
+        type: 'javascript/auto',
+        use: ['wasm-loader']
+      },
+      {
+        test: /\.tsx?$/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            // configFile: path.join(__dirname, 'tsconfig.json')
+            transpileOnly: !!opts.webpack.hot
+          }
+        }
       }
+
     ]
   },
   plugins: [
     new webpack.DefinePlugin(stringify(ctx.env.data)),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: opts.webpack.maxChunks
-        ? opts.webpack.maxChunks >> 0 >= 1 ? opts.webpack.maxChunks >> 0 : 10
-        : 10, // >= 1
-      minChunkSize: opts.webpack.minChunkSize
-        ? opts.webpack.minChunkSize >> 0
-        : 10000
-    })
+      maxChunks: opts.webpack.maxChunks ?
+        opts.webpack.maxChunks >> 0 >= 1 ? opts.webpack.maxChunks >> 0 : 10 : 10, // >= 1
+      minChunkSize: opts.webpack.minChunkSize ?
+        opts.webpack.minChunkSize >> 0 : 10000
+    }),
+    new ForkTsCheckerWebpackPlugin()
   ],
   performance: {
     hints: false
@@ -82,7 +102,8 @@ const config = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  }
+  },
+  optimization: {}
 }
 
 module.exports = config

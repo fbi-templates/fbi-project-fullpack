@@ -13,7 +13,7 @@ const options = {
     all: {
       CDN: './',
       VERSION: 'v2.1.2',
-      COPYRIGHT: '@2017'
+      COPYRIGHT: '@2018'
     },
     // `fbi s`
     dev: {
@@ -66,6 +66,7 @@ const options = {
     scripts: {
       src: 'scripts',
       dist: 'js',
+      workersDist: 'js/workers/',
       // Common js files. Will be bundle as common file, no need to require them manually.
       vendors: 'scripts/common/'
     },
