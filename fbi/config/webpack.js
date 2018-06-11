@@ -1,10 +1,6 @@
-const path = require('path')
-const webpack = require('webpack')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const templatePlugins = require('../helpers/template-plugins')
-const InlinePlugin = require('../plugins/html-inline-webpack-plugin')
 const confBase = require('./webpack.base')
 
 module.exports = async (opts, env) => {
@@ -98,6 +94,7 @@ module.exports = async (opts, env) => {
 
   // Inline assets?
   if (opts.webpack.inlineAssets) {
+    const InlinePlugin = require('../plugins/html-inline-webpack-plugin')
     config.plugins.push(
       new InlinePlugin({
         env: ctx.isProd ? 'production' : '',
@@ -109,6 +106,7 @@ module.exports = async (opts, env) => {
   // Need copy
   // https://github.com/webpack-contrib/copy-webpack-plugin#usage
   if (opts.copy.length > 0) {
+    const CopyWebpackPlugin = require('copy-webpack-plugin')
     config.plugins.push(new CopyWebpackPlugin(opts.copy))
   }
 

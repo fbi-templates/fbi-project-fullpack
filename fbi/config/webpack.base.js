@@ -1,4 +1,3 @@
-const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 
@@ -14,6 +13,7 @@ const babelOptions = require('../helpers/babel-options')(
 )
 
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const Stylish = require('webpack-stylish')
 
 const config = {
   target: opts.webpack.target || 'web',
@@ -21,7 +21,7 @@ const config = {
   externals: opts.webpack.externals,
   resolve: {
     modules: ctx.nodeModulesPaths,
-    extensions: ['*', '.ts', '.tsx', '.js', '.css', '.json'],
+    // extensions: ['*', '.ts', '.tsx', '.js', '.css', '.json'],
     unsafeCache: true,
     alias: opts.webpack.alias
   },
@@ -39,9 +39,9 @@ const config = {
         use: {
           loader: 'worker-loader',
           options: {
-            name: opts.webpack.hash ?
+            name: (opts.webpack.hash && ctx.env.name === 'prod') ?
               `${opts.mapping.scripts.workersDist}[name]-${opts.webpack.format.hash ||
-                '[hash:6]'}.js` : `${opts.mapping.scripts.workersDist}[name].js`,
+                '[hash:6]'}.js` : `${opts.mapping.scripts.workersDist}[name].js?[hash:6]`,
           }
         }
       }, {
@@ -69,7 +69,6 @@ const config = {
         use: {
           loader: 'ts-loader',
           options: {
-            // configFile: path.join(__dirname, 'tsconfig.json')
             transpileOnly: !!opts.webpack.hot
           }
         }
@@ -86,7 +85,9 @@ const config = {
       minChunkSize: opts.webpack.minChunkSize ?
         opts.webpack.minChunkSize >> 0 : 10000
     }),
-    new ForkTsCheckerWebpackPlugin()
+    new ForkTsCheckerWebpackPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new Stylish()
   ],
   performance: {
     hints: false

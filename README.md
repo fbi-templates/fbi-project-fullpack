@@ -15,6 +15,7 @@ Progressive frontend project template.
 - Support pure `HTML` and [Handlebars](http://handlebarsjs.com/) template.
 - Support pure `CSS` and [Sass-like](https://github.com/jonathantneal/precss) [PostCSS](http://postcss.org/)
 - Support `ES5`, `ES2015`, `ES2016`, `ES2017`. Adds specific imports for polyfills automatically when they are used in each file. (polyfills will increase the file size, please use as appropriate.) [see more](https://github.com/babel/babel/tree/master/packages/babel-preset-env#usebuiltins-usage)
+- Support WebAssembly, Web Worker, Typescript
 - Unlimited environment data.
 - Http proxy.
 - Paths mapping.

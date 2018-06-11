@@ -112,7 +112,10 @@ const options = {
     // For LimitChunkCountPlugin: https://doc.webpack-china.org/plugins/limit-chunk-count-plugin
     maxChunks: 3, // >= 1, default: 10
     minChunkSize: 10000, // default: 10000
-    externals: [],
+    externals: {
+      fs: true,
+      path: true,
+    },
     alias: {},
     // Webpack module noParse
     // Docs: https://webpack.js.org/configuration/module/#module-noparse
@@ -120,13 +123,14 @@ const options = {
       return false
     },
     // File content banner (Only valid in js and css files)
-    banner: '',
-    sourcemap: 'cheap-module-source-map',
+    banner: `Built at ${new Date()}`,
+    sourcemap: 'cheap-module-eval-source-map',
     format: {
       hash: '[hash:6]',
       chunkhash: '[chunkhash:6]',
       contenthash: '[contenthash:6]'
-    }
+    },
+    logLevel: 'debug', // 'trace','debug','info','warn','error','silent'
   },
 
   // Code lint config
@@ -237,13 +241,11 @@ const options = {
 
   // Directories to copy
   // https://github.com/webpack-contrib/copy-webpack-plugin#usage
-  copy: [
-    {
-      from: 'static',
-      to: '.',
-      ignore: []
-    }
-  ]
+  copy: [{
+    from: 'static',
+    to: '.',
+    ignore: []
+  }]
 }
 
 module.exports = options

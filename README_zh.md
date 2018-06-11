@@ -17,6 +17,7 @@
 - 支持纯 `HTML` 和 [Handlebars](http://handlebarsjs.com/) 模板
 - 支持纯 `CSS` and [Sass-like](https://github.com/jonathantneal/precss) [PostCSS](http://postcss.org/)
 - 支持 `ES5`, `ES2015`, `ES2016`, `ES2017`， 使用到的新特性会自动引入相关polyfills (polyfills会增加文件体积，请酌情使用) [了解更多](https://github.com/babel/babel/tree/master/packages/babel-preset-env#usebuiltins-usage)
+- 支持 WebAssembly, Web Worker, Typescript
 - 无限制的环境数据配置
 - Http代理
 - 路径映射

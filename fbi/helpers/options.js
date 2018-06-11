@@ -21,8 +21,7 @@ const defaults = {
       options: {}
     }
   },
-  copy: [],
-  compress: {
+  minify: {
     templates: {
       enable: true,
       options: {}
@@ -36,6 +35,7 @@ const defaults = {
       options: {}
     }
   },
+  copy: [],
   templates: {},
   scripts: {},
   styles: {}

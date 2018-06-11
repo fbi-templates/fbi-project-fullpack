@@ -1,4 +1,3 @@
-const path = require('path')
 const remove = require('./helpers/remove')
 ctx.env = require('./helpers/get-env')('clean', 'prod', true)
 

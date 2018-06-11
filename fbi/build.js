@@ -1,6 +1,4 @@
-const path = require('path')
 const webpack = require('webpack')
-const rimraf = require('rimraf')
 const remove = require('./helpers/remove')
 
 ctx.env = require('./helpers/get-env')('build', 'prod')
@@ -9,7 +7,6 @@ ctx.isProd = true
 const opts = ctx.options
 
 const webpackConfig = require('./config/webpack')
-const statsConfig = require('./config/stats')
 
 async function build() {
   const dist = ctx.env.dist || 'dist'
@@ -25,11 +22,10 @@ async function build() {
   const webpackConfigs = await webpackConfig(opts, 'prod')
 
   return new Promise((resolve, reject) => {
-    webpack(webpackConfigs, (err, stats) => {
+    webpack(webpackConfigs, err => {
       if (err) {
         reject(err)
       }
-      console.log(stats.toString(statsConfig))
 
       resolve()
     })

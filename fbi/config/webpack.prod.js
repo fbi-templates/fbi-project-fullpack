@@ -1,8 +1,5 @@
-const fs = require('fs')
-const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 const opts = ctx.options
@@ -15,10 +12,11 @@ const config = {
       `${opts.mapping.scripts.dist}/[name]-${opts.webpack.format.hash ||
           '[hash:6]'}.js` : `${opts.mapping.scripts.dist}/[name].js`,
     path: ctx.utils.path.cwd(ctx.env.dist),
-    publicPath: ctx.env.data.CDN || './'
+    publicPath: ctx.env.data.CDN || './',
+    webassemblyModuleFilename: '[modulehash].wasm'
   },
   // For development, use cheap-module-eval-source-map. For production, use cheap-module-source-map.
-  devtool: opts.sourcemap || false,
+  devtool: opts.webpack.sourcemap ?  'cheap-module-source-map' : false,
   module: {
     rules: [{
       test: /\.css$/,
@@ -38,7 +36,6 @@ const config = {
     }]
   },
   plugins: [
-    new ProgressBarPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),

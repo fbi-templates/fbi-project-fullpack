@@ -54,11 +54,6 @@ async function getEntries(
     const name = path.basename(item, ext)
     entryNames.push(name)
     entries[name] = []
-    if (!isProd && opts.webpack.hot) {
-      entries[name] = entries[name].concat([
-        modulesPath + '/webpack-hot-middleware/client?reload=true'
-      ])
-    }
     entries[name] = entries[name].concat(['./' + item])
   })
 

@@ -3,24 +3,23 @@ const Koa = require('koa')
 const koaStatic = require('koa-static')
 const webpack = require('webpack')
 const proxy = require('koa-proxies')
-const koaWebpack = require('./plugins/koa-webpack')
-const statsConfig = require('./config/stats')
+const koaWebpack = require('koa-webpack')
 
 // Set env
 ctx.env = require('./helpers/get-env')('serve')
-ctx.noop = function() {}
+ctx.noop = function () {}
 
 const makeWebpackConfig = require('./config/webpack')
 const opts = ctx.options
 
-async function server(app) {
+async function server(app, serverInstance) {
   const webpackConfigs = await makeWebpackConfig(opts, 'dev')
 
   return new Promise((resolve, reject) => {
     const compiler = webpack(webpackConfigs)
-    const middleware = koaWebpack({
+    koaWebpack({
       compiler,
-      dev: {
+      devMiddleware: {
         publicPath: webpackConfigs.output.publicPath,
         headers: {
           'Access-Control-Allow-Origin': '*'
@@ -29,31 +28,37 @@ async function server(app) {
           aggregateTimeout: 300,
           poll: true
         },
-        stats: statsConfig
-      }
-    })
+        logLevel: opts.webpack.logLevel,
+        stats: 'none',
+      },
+      hotClient: opts.webpack.hot ? {
+        allEntries: true,
+        server: serverInstance,
+        logLevel: opts.webpack.logLevel,
+      } : null
+    }).then(middleware => {
+      app.use(middleware)
+      app.use(koaStatic(opts.mapping.src || 'src'))
 
-    app.use(middleware)
-    app.use(koaStatic(opts.mapping.src || 'src'))
-
-    const proxyTableKeys = Object.keys(opts.proxy)
-    if (proxyTableKeys.length) {
-      // https://github.com/vagusX/koa-proxies/blob/master/examples/server.js#L11
-      proxyTableKeys.map(context => {
-        let options = opts.proxy[context]
-        if (typeof options === 'string') {
-          options = {
-            target: options,
-            changeOrigin: true,
-            logs: Boolean(ctx.mode.debug),
-            rewrite: _path => _path.replace(context, '/')
+      const proxyTableKeys = Object.keys(opts.proxy)
+      if (proxyTableKeys.length) {
+        // https://github.com/vagusX/koa-proxies/blob/master/examples/server.js#L11
+        proxyTableKeys.map(context => {
+          let options = opts.proxy[context]
+          if (typeof options === 'string') {
+            options = {
+              target: options,
+              changeOrigin: true,
+              logs: Boolean(ctx.mode.debug),
+              rewrite: _path => _path.replace(context, '/')
+            }
           }
-        }
-        app.use(proxy(context, options))
-      })
-    }
+          app.use(proxy(context, options))
+        })
+      }
 
-    middleware.dev.waitUntilValid(() => resolve(app))
+      middleware.devMiddleware.waitUntilValid(() => resolve(app))
+    })
   })
 }
 
@@ -66,7 +71,10 @@ function listen(app, startPort) {
     server.listen(port, err => {
       server.once('close', () => {
         app.listen(port, err => {
-          return err ? reject(err) : resolve(port)
+          return err ? reject(err) : resolve({
+            port,
+            server
+          })
         })
       })
       server.close()
@@ -80,6 +88,12 @@ function listen(app, startPort) {
 
 async function start() {
   const app = new Koa()
+  let startPort = ctx.env.params.port >> 0 || opts.server.port
+  const {
+    port,
+    serverInstance
+  } = await listen(app, startPort)
+
   if (ctx.env.dist && ctx.env.name !== 'dev') {
     ctx.logger.log(`Server root: ${ctx.env.dist}.`)
     if (await ctx.utils.fs.exist(ctx.env.dist)) {
@@ -88,11 +102,11 @@ async function start() {
       throw `Directory \`${ctx.env.dist}\` not exist.`
     }
   } else {
-    await server(app)
+    await server(app, serverInstance)
   }
 
-  let startPort = ctx.env.params.port >> 0 || opts.server.port
-  const port = await listen(app, startPort)
+  // let startPort = ctx.env.params.port >> 0 || opts.server.port
+  // const {port, server} = await listen(app, startPort)
   ctx.logger.info(`Server runing at http://${opts.server.host}:${port}`)
 }
 

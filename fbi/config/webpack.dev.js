@@ -1,5 +1,3 @@
-const webpack = require('webpack')
-
 const opts = ctx.options
 const postcssOptions = require('../helpers/postcss-options')(opts)
 
@@ -11,7 +9,8 @@ const config = {
       `${opts.mapping.scripts.dist}/[name].js`,
     path: '/',
     publicPath: '/',
-    globalObject: 'this'
+    pathinfo: true,
+    globalObject: 'this',
   },
   // For development, use cheap-module-eval-source-map. For production, use cheap-module-source-map.
   devtool: opts.webpack.sourcemap || 'cheap-module-eval-source-map',
@@ -29,12 +28,6 @@ const config = {
     }]
   },
   plugins: []
-}
-
-if (opts.webpack.hot) {
-  config.plugins = config.plugins.concat([
-    new webpack.HotModuleReplacementPlugin()
-  ])
 }
 
 module.exports = config

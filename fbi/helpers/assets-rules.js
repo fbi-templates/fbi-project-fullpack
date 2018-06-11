@@ -1,6 +1,3 @@
-const path = require('path')
-const glob = require('glob')
-
 module.exports = (opts, isProd) => {
   const hash = opts.webpack.format ? opts.webpack.format.hash : '[hash:6]'
 

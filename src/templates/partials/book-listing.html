@@ -1,0 +1,20 @@
+<h1>{{section}}</h1>
+
+<div>
+  {{#books}}
+    <h3>{{title}}</h3>
+
+    <div>
+      {{#if synopsis}}
+        {{synopsis}}
+      {{else}}
+        No synopsis.
+      {{/if}}
+    </div>
+  {{/books}}
+</div>
+
+<div>
+  <p>Books array:</p>
+  <pre>{{json books}}</pre>
+</div>
