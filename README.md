@@ -139,6 +139,10 @@ $ fbi init -a  # or `--all`
 
 ## Changelog
 
+- **v3.1.1**  (2018.06.14)
+  - Add 'typescript' option for enable or turn off typescript support
+  - Remove `webpack.NamedModulesPlugin` on production mode
+
 - **v3**  (2018.06.08)
   - Update dependencies.
   - Using `webpack 4` now.

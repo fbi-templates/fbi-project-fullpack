@@ -140,6 +140,10 @@ $ fbi init -a  # or `--all`
 
 ## 变更日志
 
+- **v3.1.1**  (2018.06.14)
+  - 添加'typescript'选项以开启或关闭typescript支持
+  - 生产模式时删除`webpack.NamedModulesPlugin`
+
 - **v3**  (2018.06.08)
   - 更新开发依赖.
   - 现在使用 `webpack 4`.

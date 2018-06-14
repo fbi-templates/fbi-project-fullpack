@@ -12,7 +12,6 @@ const babelOptions = require('../helpers/babel-options')(
   devModulesPath
 )
 
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const Stylish = require('webpack-stylish')
 
 const config = {
@@ -63,17 +62,7 @@ const config = {
         test: /\.wasm$/,
         type: 'javascript/auto',
         use: ['wasm-loader']
-      },
-      {
-        test: /\.tsx?$/,
-        use: {
-          loader: 'ts-loader',
-          options: {
-            transpileOnly: !!opts.webpack.hot
-          }
-        }
       }
-
     ]
   },
   plugins: [
@@ -85,8 +74,6 @@ const config = {
       minChunkSize: opts.webpack.minChunkSize ?
         opts.webpack.minChunkSize >> 0 : 10000
     }),
-    new ForkTsCheckerWebpackPlugin(),
-    new webpack.NamedModulesPlugin(),
     new Stylish()
   ],
   performance: {

@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const opts = ctx.options
 const postcssOptions = require('../helpers/postcss-options')(opts)
 
@@ -27,7 +28,9 @@ const config = {
       ]
     }]
   },
-  plugins: []
+  plugins: [
+    new webpack.NamedModulesPlugin()
+  ]
 }
 
 module.exports = config

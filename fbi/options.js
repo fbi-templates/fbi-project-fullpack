@@ -131,6 +131,7 @@ const options = {
       contenthash: '[contenthash:6]'
     },
     logLevel: 'debug', // 'trace','debug','info','warn','error','silent'
+    typescript: true
   },
 
   // Code lint config

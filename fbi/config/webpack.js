@@ -2,6 +2,7 @@ const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const templatePlugins = require('../helpers/template-plugins')
 const confBase = require('./webpack.base')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 module.exports = async (opts, env) => {
   // Make sure options
@@ -60,6 +61,21 @@ module.exports = async (opts, env) => {
         }
       }
     }
+  }
+
+  // Typescript
+  if (opts.webpack.typescript) {
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      use: {
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: !!opts.webpack.hot
+        }
+      }
+    })
+
+    config.plugins.push(new ForkTsCheckerWebpackPlugin())
   }
 
   // Template
