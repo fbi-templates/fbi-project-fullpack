@@ -12,16 +12,16 @@ function renderPartial() {
   div.innerHTML = bookListingTemplate({
     section: 'Book list:',
     books: [{
-        title: 'A book',
-        synopsis: 'With a description'
-      },
-      {
-        title: 'Another book',
-        synopsis: 'From a very good author'
-      },
-      {
-        title: 'Book without synopsis'
-      }
+      title: 'A book',
+      synopsis: 'With a description'
+    },
+    {
+      title: 'Another book',
+      synopsis: 'From a very good author'
+    },
+    {
+      title: 'Book without synopsis'
+    }
     ]
   })
   document.querySelector('#wrap').appendChild(div)

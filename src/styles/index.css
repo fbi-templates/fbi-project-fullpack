@@ -14,7 +14,6 @@ body {
   font-size: 30px;
   text-align: center;
   margin: 0;
-
   .version {
     font-size: 16px;
     font-weight: 500;
@@ -33,10 +32,8 @@ body {
   margin: 0;
   padding: 0;
   color: #ccc;
-
   li {
     margin: 1rem 0;
-
     a {
       vertical-align: middle;
       line-height: 40px;
@@ -47,13 +44,11 @@ body {
 
 .templates-list {
   display: flex;
-
   ul {
     flex: 1;
     margin: 0 0 1em;
     padding: 0;
   }
-
   .item {
     display: block;
     padding: 0.3em;
@@ -61,14 +56,12 @@ body {
     position: relative;
     box-sizing: border-box;
     transition: all 300ms ease;
-
     .item-desc {
       color: #666;
       display: block;
       font-size: 12px;
       padding: 0.5em;
     }
-
     &::before {
       content: '';
       position: absolute;
@@ -80,21 +73,17 @@ body {
       border-radius: 2px;
       transition: all 1s ease;
     }
-
     &:hover {
       &::before {
         width: 100%;
       }
     }
   }
-
   .ico-fav {
     margin-right: 0.2em;
-
     &.green {
       color: #88d615;
     }
-
     &.yellow {
       color: #ff9d00;
     }
@@ -109,24 +98,19 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
-
   &.eslint {
     background-image: url('../images/eslint.svg');
   }
-
   &.babel {
     background-image: url('../images/babel.svg');
   }
-
   &.postcss {
     background-image: url('../images/postcss.svg');
   }
-
   &.handlebars {
     background-image: url('../images/handlebars.png');
     background-color: #f15a24;
   }
-
   &.webpack img {
     height: 100%;
   }

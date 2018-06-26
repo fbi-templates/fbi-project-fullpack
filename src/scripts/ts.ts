@@ -1,6 +1,6 @@
 import '../styles/_base.css'
 
-function greeter(person: string) {
+function greeter (person: string) {
   return 'Hello, ' + person
 }
 

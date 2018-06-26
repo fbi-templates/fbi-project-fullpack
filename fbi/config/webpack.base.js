@@ -3,6 +3,9 @@ const webpack = require('webpack')
 
 const stringify = require('../helpers/stringify')
 
+if (ctx.mode.debug) {
+  process.traceDeprecation = true
+}
 const opts = ctx.options
 const devModulesPath = ctx.nodeModulesPaths[1] || './node_modules'
 
@@ -11,8 +14,6 @@ const babelOptions = require('../helpers/babel-options')(
   opts.scripts,
   devModulesPath
 )
-
-const Stylish = require('webpack-stylish')
 
 const config = {
   target: opts.webpack.target || 'web',
@@ -28,30 +29,33 @@ const config = {
     modules: ctx.nodeModulesPaths
   },
   module: {
-    noParse: opts.noParse ?
-      opts.noParse :
-      () => {
+    noParse: opts.noParse
+      ? opts.noParse
+      : () => {
         return false
       },
-    rules: [{
+    rules: [
+      {
         test: /\.worker\.js$/,
         use: {
           loader: 'worker-loader',
           options: {
-            name: (opts.webpack.hash && ctx.env.name === 'prod') ?
-              `${opts.mapping.scripts.workersDist}[name]-${opts.webpack.format.hash ||
-                '[hash:6]'}.js` : `${opts.mapping.scripts.workersDist}[name].js?[hash:6]`,
+            name: opts.webpack.hash && ctx.env.name === 'prod'
+              ? `${opts.mapping.scripts.workersDist}[name]-${opts.webpack.format.hash || '[hash:6]'}.js`
+              : `${opts.mapping.scripts.workersDist}[name].js?[hash:6]`
           }
         }
-      }, {
+      },
+      {
         test: /\.js$/,
         exclude: _path => !!_path.match(/node_modules/),
-        use: [{
-            loader: 'cache-loader',
-            options: {
-              cacheDirectory: path.resolve('node_modules/.cache/cache-loader')
-            }
-          },
+        use: [
+          // {
+          //   loader: 'cache-loader',
+          //   options: {
+          //     cacheDirectory: path.resolve('node_modules/.cache/cache-loader')
+          //   }
+          // },
           {
             loader: 'babel-loader',
             options: babelOptions
@@ -69,16 +73,14 @@ const config = {
     new webpack.DefinePlugin(stringify(ctx.env.data)),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: opts.webpack.maxChunks ?
-        opts.webpack.maxChunks >> 0 >= 1 ? opts.webpack.maxChunks >> 0 : 10 : 10, // >= 1
-      minChunkSize: opts.webpack.minChunkSize ?
-        opts.webpack.minChunkSize >> 0 : 10000
-    }),
-    new Stylish()
+      maxChunks: opts.webpack.maxChunks
+        ? opts.webpack.maxChunks >> 0 >= 1 ? opts.webpack.maxChunks >> 0 : 10
+        : 10, // >= 1
+      minChunkSize: opts.webpack.minChunkSize
+        ? opts.webpack.minChunkSize >> 0
+        : 10000
+    })
   ],
-  performance: {
-    hints: false
-  },
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).

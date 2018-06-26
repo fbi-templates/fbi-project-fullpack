@@ -114,7 +114,7 @@ const options = {
     minChunkSize: 10000, // default: 10000
     externals: {
       fs: true,
-      path: true,
+      path: true
     },
     alias: {},
     // Webpack module noParse
@@ -140,14 +140,14 @@ const options = {
       enable: true,
       options: {
         // http://eslint.org/docs/user-guide/configuring
-        // https://github.com/airbnb/javascript
-        // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base
         rules: {
-          semi: [2, 'never'],
-          'comma-dangle': [2, 'never'],
-          'no-console': [0],
-          'no-param-reassign': [0] // https://github.com/airbnb/javascript#functions--mutate-params
+          // rules docs: https://standardjs.com/rules.html
+          semi: ['error', 'never'],
+          indent: ['error', 2]
         }
+        // fix: true,
+        // emitError: true,
+        // emitWarning: true
       }
     },
     styles: {
@@ -157,7 +157,15 @@ const options = {
         extends: 'stylelint-config-standard',
         // Docs: http://stylelint.io/user-guide/rules/
         // Example: http://stylelint.io/user-guide/example-config/
-        rules: {}
+        rules: {
+          'rule-empty-line-before': [
+            'always',
+            {
+              except: ['inside-block-and-after-rule'],
+              ignore: ['inside-block']
+            }
+          ]
+        }
       }
     }
   },
@@ -242,11 +250,13 @@ const options = {
 
   // Directories to copy
   // https://github.com/webpack-contrib/copy-webpack-plugin#usage
-  copy: [{
-    from: 'static',
-    to: '.',
-    ignore: []
-  }]
+  copy: [
+    {
+      from: 'static',
+      to: '.',
+      ignore: []
+    }
+  ]
 }
 
 module.exports = options

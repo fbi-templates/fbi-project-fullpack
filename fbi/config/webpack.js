@@ -1,3 +1,4 @@
+const path = require('path')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const templatePlugins = require('../helpers/template-plugins')
@@ -23,27 +24,51 @@ module.exports = async (opts, env) => {
   const assetsRules = require('../helpers/assets-rules')(opts, ctx.isProd)
   config.module.rules = config.module.rules.concat(assetsRules)
 
+  const htmlEntries = []
+
   if (opts.lint.scripts.enable) {
-    config.module.rules.push({
+    // eslint-loader
+    config.module.rules.unshift({
       test: /\.js$/,
       loader: 'eslint-loader',
       enforce: 'pre',
       exclude: /node_modules/,
-      options: Object.assign({}, {
+      options: merge(
+        {},
+        {
           root: true,
           parser: 'babel-eslint',
-          formatter: require('eslint-friendly-formatter'),
           parserOptions: {
             sourceType: 'module'
           },
           env: {
             browser: true
           },
-          extends: 'airbnb-base'
+          extends: 'standard',
+          cache: true
         },
         opts.lint.scripts.options
       )
     })
+
+    // tslint-loader
+    if (opts.webpack.typescript) {
+      config.module.rules.unshift({
+        test: /\.ts$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'tslint-loader',
+            options: {
+              configFile: path.join(__dirname, './tslint.json'),
+              tsConfigFile: 'tsconfig.json',
+              typeCheck: true,
+              emitErrors: true
+            }
+          }
+        ]
+      })
+    }
   }
 
   // Common chunk
@@ -51,7 +76,6 @@ module.exports = async (opts, env) => {
     (ctx.isProd || confOptions.generateCommonsOnDevMode) &&
     opts.webpack.commons
   ) {
-
     config.optimization.splitChunks = {
       cacheGroups: {
         commons: {
@@ -75,24 +99,30 @@ module.exports = async (opts, env) => {
       }
     })
 
-    config.plugins.push(new ForkTsCheckerWebpackPlugin())
+    config.plugins.push(
+      new ForkTsCheckerWebpackPlugin({
+        logger: ctx.logger,
+        colors: false
+      })
+    )
   }
 
   // Template
   if (confOptions.useTemplateEngine) {
     config.module.rules.push({
       test: /\.(html|hbs|handlebars)$/i,
-      use: [{
-        loader: 'handlebars-loader',
-        options: {
-          extensions: ['.hbs', '.html', '.handlebars'],
-          inlineRequires: `\/${opts.mapping.images.src}|${opts.mapping.media
-              .src}\/`,
-          partialDirs: confOptions.handlebarsDirs.partialDirs,
-          helperDirs: confOptions.handlebarsDirs.helperDirs,
-          debug: Boolean(ctx.mode.debug)
+      use: [
+        {
+          loader: 'handlebars-loader',
+          options: {
+            extensions: ['.hbs', '.html', '.handlebars'],
+            inlineRequires: `\/${opts.mapping.images.src}|${opts.mapping.media.src}\/`,
+            partialDirs: confOptions.handlebarsDirs.partialDirs,
+            helperDirs: confOptions.handlebarsDirs.helperDirs,
+            debug: Boolean(ctx.mode.debug)
+          }
         }
-      }]
+      ]
     })
   } else {
     config.module.rules.push({
@@ -103,9 +133,10 @@ module.exports = async (opts, env) => {
 
   // Html plugins
   config.plugins = config.plugins.concat(
-    templatePlugins(opts, confOptions.templateFiles, ctx.env.data).map(
-      item => new HtmlWebpackPlugin(item)
-    )
+    templatePlugins(opts, confOptions.templateFiles, ctx.env.data).map(item => {
+      htmlEntries.push(item.filename)
+      return new HtmlWebpackPlugin(item)
+    })
   )
 
   // Inline assets?
@@ -126,5 +157,5 @@ module.exports = async (opts, env) => {
     config.plugins.push(new CopyWebpackPlugin(opts.copy))
   }
 
-  return config
+  return { webpackConfigs: config, htmlEntries }
 }

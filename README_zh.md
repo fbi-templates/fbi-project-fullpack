@@ -140,6 +140,13 @@ $ fbi init -a  # or `--all`
 
 ## 变更日志
 
+- **v3.1.2**  (2018.06.26)
+  - 为静态服务器添加页面索引
+  - 添加 `tslint`
+  - 删除 `webpack-stylish` 插件
+  - 更新 `html-inline-webpack-plugin`
+  - `eslint-config-airbnb` 替换为 `eslint-config-standard`
+
 - **v3.1.1**  (2018.06.14)
   - 添加'typescript'选项以开启或关闭typescript支持
   - 生产模式时删除`webpack.NamedModulesPlugin`

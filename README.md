@@ -139,6 +139,13 @@ $ fbi init -a  # or `--all`
 
 ## Changelog
 
+- **v3.1.2**  (2018.06.26)
+  - Add Page Index when serving static
+  - Add `tslint`
+  - Remove `webpack-stylish` plugin
+  - Update `html-inline-webpack-plugin`
+  - Replace `eslint-config-airbnb` with `eslint-config-standard`
+
 - **v3.1.1**  (2018.06.14)
   - Add 'typescript' option for enable or turn off typescript support
   - Remove `webpack.NamedModulesPlugin` on production mode
