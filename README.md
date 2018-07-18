@@ -139,6 +139,8 @@ $ fbi init -a  # or `--all`
 
 ## Changelog
 
+[Latest](./CHANGELOG.md)
+
 - **v3.1.2**  (2018.06.26)
   - Add Page Index when serving static
   - Add `tslint`
